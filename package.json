@@ -1,0 +1,34 @@
+{
+	"name": "h5.modbus.inode",
+	"version": "0.0.0",
+	"description": "MODBUS <-> iNode.pl devices gateway.",
+	"keywords": ["h5", "modbus", "slave", "inode", "sensor", "iot"],
+	"license": "MIT",
+	"homepage": "https://github.com/morkai/h5.modbus.inode",
+	"author": {
+		"name": "Łukasz Walukiewicz",
+		"email": "lukasz@miracle.systems",
+		"url": "http://miracle.systems/p/h5.modbus.inode"
+	},
+	"bugs": "https://github.com/morkai/h5.modbus.inode/issues",
+	"repository": {
+		"type": "git",
+		"url":  "http://github.com/morkai/h5.modbus.inode.git"
+	},
+	"engines": {
+    "node": ">=4.x.x"
+  },
+	"main": "./lib/index",
+	"dependencies": {
+    "h5.buffers": "0.x.x",
+		"h5.modbus": "morkai/h5.modbus",
+    "h5.bluetooth.hci": "morkai/h5.bluetooth.hci",
+    "h5.bluetooth.hci.inode": "morkai/h5.bluetooth.hci.inode"
+	},
+	"devDependencies": {
+
+	},
+	"scripts": {
+
+	}
+}
