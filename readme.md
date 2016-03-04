@@ -128,6 +128,11 @@ The next registers depend on the model of the device.
     * 2 - cnt (impulse count)
   * 18-19 - total value (uint32be; value multiplied by 100)
   * 20-21 - average value (uint32be; value multiplied by 100)
+  * 22 - light level (uint16be; value multiplied by 100)
+  * 23 - week day (uint16be)
+  * 24-25 - week day total value (uint32be; value multiplied by 100)
+  * 26 - battery level (uint16be)
+  * 27 - battery voltage (uint16be; value is multiplied by 100)
 
 ### Care Sensor
 
