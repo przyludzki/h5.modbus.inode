@@ -19,10 +19,7 @@ const iNodeModbus = require('h5.modbus.inode');
 
 const gateway = new iNodeModbus.Gateway({
   // Whether the data emitted by connections is hex encoded
-  hexEncoded: true,
-  // Time since the last advertising report was received after which a device should be considered unavailable.
-  // Unavailable devices will return MODBUS exception code 0x0B (Gateway Target Device Failed To Respond).
-  deviceTimeout: 20000
+  hexEncoded: true
 });
 
 const slave = modbus.createSlave({
@@ -42,11 +39,17 @@ gateway.addConnection(modbus.createConnection({
   noActivityTime: 10000
 }));
 
+const options = {
+  // Time since the last advertising report was received after which a device should be considered unavailable.
+  // Unavailable devices will return the MODBUS exception code 0x0B (Gateway Target Device Failed To Respond).
+  deviceTimeout: 20000
+};
+
 // Map iNode device MAC addresses to MODBUS units
-gateway.addDevice(new iNodeModbus.Device('00:12:6F:6D:3E:06', 1));
-gateway.addDevice(new iNodeModbus.Device('00:12:6F:6D:3C:55', 2));
-gateway.addDevice(new iNodeModbus.Device('00:12:6F:91:35:FB', 100));
-gateway.addDevice(new iNodeModbus.Device('00:12:6F:91:37:A1', 101));
+gateway.addDevice(new iNodeModbus.Device('00:12:6F:6D:3E:06', 1, options));
+gateway.addDevice(new iNodeModbus.Device('00:12:6F:6D:3C:55', 2, options));
+gateway.addDevice(new iNodeModbus.Device('00:12:6F:91:35:FB', 100, options));
+gateway.addDevice(new iNodeModbus.Device('00:12:6F:91:37:A1', 101, options));
 ```
 
 MODBUS master:
