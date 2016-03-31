@@ -19,7 +19,12 @@ const iNodeModbus = require('h5.modbus.inode');
 
 const gateway = new iNodeModbus.Gateway({
   // Whether the data emitted by connections is hex encoded
-  hexEncoded: true
+  hexEncoded: true,
+  // A function to call after receiving an Advertising Report from an unknown device
+  unknownDeviceHandler: function handleUnknownDevice(report)
+  {
+    console.log('Report from an unknown device:', report);
+  }
 });
 
 const slave = modbus.createSlave({
