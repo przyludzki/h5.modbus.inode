@@ -103,8 +103,8 @@ All device models have the same first 16 registers:
   * 0-2 - MAC address
   * 3-10 - local name (string)
   * 11 - model (uint16be)
-  * 12 - RSSI (int16be)
-  * 13 - TX power level (int16be)
+  * 12 - RSSI (int16be; `0xFF` if undefined)
+  * 13 - TX power level (int16be; `0xFF` if undefined)
   * 14 - RTTO (uint16be)
   * 15 - alarm bits:
     * 0 - LOW_BATTERY
@@ -121,6 +121,35 @@ All device models have the same first 16 registers:
 
 The next registers depend on the model of the device.
 
+### Decoding values
+
+For example, the following register:
+
+> 22 - light level (uint16be; `0xFF` if undefined; value is multiplied by a 100)
+
+means that the light level is available under register 22, i.e. bytes 44 and 45
+that should be read as an unsigned 16-bit integer (big-endian) and divided by a 100.
+If the resulting value is equal to `0xFF` then it's undefined (the device model
+doesn't support that value or it wasn't received yet).
+
+```js
+const lightLevelRegister = new Buffer([0x63, 0x9C]);
+const lightLevel = lightLevelRegister.readUInt16BE(0) / 100;
+console.log(lightLevel === 0xFF ? `null` : `${lightLevel}%`); // null
+```
+
+```js
+const lightLevelRegister = new Buffer([0x27, 0x10]);
+const lightLevel = lightLevelRegister.readUInt16BE(0) / 100;
+console.log(lightLevel === 0xFF ? `null` : `${lightLevel}%`); // 100%
+```
+
+```js
+const lightLevelRegister = new Buffer([0x04, 0xD2]);
+const lightLevel = lightLevelRegister.readUInt16BE(0) / 100;
+console.log(lightLevel === 0xFF ? `null` : `${lightLevel}%`); // 12.34%
+```
+
 ### Care Relay
 
   * 16 - flag bits:
@@ -134,13 +163,13 @@ The next registers depend on the model of the device.
     * 0 - kWh/kW
     * 1 - m³
     * 2 - cnt (impulse count)
-  * 18-19 - total value (uint32be; value multiplied by 100)
-  * 20-21 - average value (uint32be; value multiplied by 100)
-  * 22 - light level (uint16be; value multiplied by 100)
-  * 23 - week day (uint16be)
-  * 24-25 - week day total value (uint32be; value multiplied by 100)
+  * 18-19 - total value (uint32be; value is multiplied by a 100)
+  * 20-21 - average value (uint32be; value is multiplied by a 100)
+  * 22 - light level (uint16be; `0xFF` if undefined; value is multiplied by a 100)
+  * 23 - week day (uint16be; `0xFF` if undefined)
+  * 24-25 - week day total value (uint32be; value is multiplied by a 100)
   * 26 - battery level (uint16be)
-  * 27 - battery voltage (uint16be; value is multiplied by 100)
+  * 27 - battery voltage (uint16be; `0xFF` if undefined; value is multiplied by a 100)
 
 ### Care Sensor
 
@@ -148,14 +177,15 @@ The next registers depend on the model of the device.
     * 0 - input or magnetic field direction in case of CS#5
     * 1 - output
     * 2 - motion
-  * 17 - temperature (int16be; value is multiplied by 100)
-  * 18 - humidity (uint16be; value is multiplied by 100) or magnetic field value in case of CS#5 (uint16be)
+  * 17 - temperature (int16be; `0xFF` if undefined; value is multiplied by a 100)
+  * 18 - humidity (uint16be; `0xFF` if undefined; value is multiplied by a 100)
+         or magnetic field value in case of CS#5 (uint16be; `0xFF` if undefined)
   * 19 - pressure (uint16be; value is multiplied by 16)
   * 20 - position x (int16be)
   * 21 - position y (int16be)
   * 22 - position z (int16be)
   * 23 - battery level (uint16be)
-  * 24 - battery voltage (uint16be; value is multiplied by 100)
+  * 24 - battery voltage (uint16be; `0xFF` if undefined; value is multiplied by a 100)
   * 25 - group bits
   * 26-27 - time (uint32be)
 
