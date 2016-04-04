@@ -150,13 +150,14 @@ The next registers depend on the model of the device.
     * 2 - motion
   * 17 - temperature (int16be; value is multiplied by 100)
   * 18 - humidity (uint16be; value is multiplied by 100) or magnetic field value in case of CS#5 (uint16be)
-  * 19 - position x (int16be)
-  * 20 - position y (int16be)
-  * 21 - position z (int16be)
-  * 22 - battery level (uint16be)
-  * 23 - battery voltage (uint16be; value is multiplied by 100)
-  * 24 - group bits
-  * 25-26 - time (uint32be)
+  * 19 - pressure (uint16be; value is multiplied by 16)
+  * 20 - position x (int16be)
+  * 21 - position y (int16be)
+  * 22 - position z (int16be)
+  * 23 - battery level (uint16be)
+  * 24 - battery voltage (uint16be; value is multiplied by 100)
+  * 25 - group bits
+  * 26-27 - time (uint32be)
 
 ## TODO
 
