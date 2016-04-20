@@ -163,8 +163,8 @@ console.log(lightLevel === 0xFF ? `null` : `${lightLevel}%`); // 12.34%
     * 0 - kWh/kW
     * 1 - m³
     * 2 - cnt (impulse count)
-  * 18-19 - total value (uint32be; value is multiplied by a 100)
-  * 20-21 - average value (uint32be; value is multiplied by a 100)
+  * 18-19 - total value (uint32be; value is multiplied by a 100 if the unit is not equal to 2)
+  * 20-21 - average value (uint32be; value is multiplied by a 100 if the unit is not equal to 2)
   * 22 - light level (uint16be; `0xFF` if undefined; value is multiplied by a 100)
   * 23 - week day (uint16be; `0xFF` if undefined)
   * 24-25 - week day total value (uint32be; value is multiplied by a 100)
