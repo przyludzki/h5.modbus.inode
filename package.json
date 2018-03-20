@@ -23,7 +23,7 @@
     "h5.buffers": "0.x.x",
     "h5.modbus": "morkai/h5.modbus",
     "h5.bluetooth.hci": "morkai/h5.bluetooth.hci",
-    "h5.bluetooth.hci.inode": "morkai/h5.bluetooth.hci.inode"
+    "h5.bluetooth.hci.inode": "przyludzki/h5.bluetooth.hci.inode#test"
   },
   "devDependencies": {
 
